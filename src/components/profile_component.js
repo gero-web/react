@@ -53,7 +53,7 @@ const Profile = ({history})=>{
        
               refForm.current.validateAll();
               if (refCheck.current.context._errors.length === 0) {
-              profile.updateProfile(email,password).then((response)=>{
+              profile(email,password).then((response)=>{
                      dispatch(logout_action);
                      dispatch(login_action(email,password));
                      setSuccessful(true);
