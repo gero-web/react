@@ -52,13 +52,13 @@ function App() {
             <>     
                 <Menu.Item key="2">  
                   <Link to={"/login"} >
-                    Login
+                    Войти
                   </Link>
                 </Menu.Item>
                 
                 <Menu.Item key="3">
                   <Link to={"/register"} >
-                    Sign Up
+                  Регистрация
                   </Link>
                 </Menu.Item>              
                 </>
@@ -67,12 +67,12 @@ function App() {
                   <>
                 <Menu.Item key="4">
                 <Link to={"/profile"} className="nav-link">
-                      profile
+                      Профиль
                   </Link>
                 </Menu.Item>    
                     <Menu.Item key="5">
                     <Link onClick={onLogout} to={'/'} className="nav-link">
-                      Logout
+                      Выход
                     </Link>
                     </Menu.Item>
                   </>         

@@ -1,9 +1,9 @@
 
-import {useState} from "react"
+import {useState,useRef} from "react"
 import {useDispatch,useSelector} from "react-redux";
 
 import { register_action} from "../actions/auth_action";
-import { Form, Input, Button, Space,Checkbox,message } from 'antd';
+import { Form, Input, Button,Alert, Space,Checkbox,message } from 'antd';
 import  PageHeader  from './pageHeader';
 import {tailLayout,layout} from '../helpers/layout';
 
@@ -12,7 +12,7 @@ const Register = ({history})=>{
 
        const [email, setEmail] = useState("");
        const [password, setPassword] = useState("");
-       
+      
        const {isLoggindIn} = useSelector(state => state.auth_reducers)
        const { messageEmail,messagePass,message:msg } = useSelector(state => state.message_reducers);
        const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Register = ({history})=>{
 
        const onChangeEmail = (event) => {
               const email = event.target.value;
-              console.log(email);
+             
               setEmail(email);
        };
           
@@ -31,8 +31,7 @@ const Register = ({history})=>{
        };
 
        const handleRegister = (event) => {
-              event.preventDefault();
-
+             console.log(1)
               dispatch(register_action(email,password)).then(()=>{
                              history.push("/login");
                      }).catch(()=>{
@@ -47,98 +46,98 @@ const Register = ({history})=>{
 };
 
 
-return ( 
+ return ( 
        
-  <>  
-     <PageHeader
-        style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
-        history= {history}
-        title="Регистрация"
-        
- />
+        <>  
+           <PageHeader
+              style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
+              history= {history}
+              title="Регистрация"
+              
+       />
 
- { !isLoggindIn && ( 
-        <>
- { msg && 
-        (<Space>
-               { msgerror()}
-        </Space>)
- }   
- <Form
- onFinish={handleRegister}
-
- {...layout}
- name="basic"
-
- initialValues={{
-   remember: true,
- }}
- 
->
- 
- <Form.Item
-   label="email"
-   name="email"
-   messageVariables={messageEmail}
-   help={messageEmail}
-   validateStatus={messageEmail?"error":"validating"}
-   rules={[
-     {
-       required: true,
-       message: 'Укажите email!',
-     },
-     {
-       type:"email",
+       { !isLoggindIn && ( 
+              <>
+       { msg && 
+              (<Space>
+                     { msgerror()}
+              </Space>)
+       }   
+       <Form
+       onFinish={handleRegister}
+     
+       {...layout}
+       name="basic"
+      
+       initialValues={{
+         remember: true,
+       }}
        
-       message:'Укажите корректный email!'
-     },
-    
-    
-   ]}
- >
-    
-   <Input  
-        onChange={onChangeEmail}
-        value={email}
-   />
- </Form.Item>
-
- <Form.Item
-   label="Password"
-   name="password"
-   help={messagePass}
-   validateStatus={messagePass?"error":"validating"}
-   rules={[
-     {
-       required: true,
-       message:  'Укажите пароль!',
-     },
-     {
-      len: 8,
-      message:  "Пароль должен быть больше 8 символов" 
-    },
-   ]}
- >
-   <Input.Password 
-        onChange={onChangePassword}
-        value={password}
-   />
- </Form.Item>
-
- <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-   <Checkbox>Remember me</Checkbox>
- </Form.Item>
-
- <Form.Item {...tailLayout} >
-   <Button type="primary" htmlType="submit">
-     Submit
-   </Button>
- </Form.Item>
-</Form>
-</>
-)}
-</>
-);   
+     >
+       
+       <Form.Item
+         label="email"
+         name="email"
+         messageVariables={messageEmail}
+         help={messageEmail}
+         validateStatus={messageEmail?"error":"validating"}
+         rules={[
+           {
+             required: true,
+             message: 'Укажите email!',
+           },
+           {
+             type:"email",
+             
+             message:'Укажите корректный email!'
+           },
+          
+          
+         ]}
+       >
+          
+         <Input  
+              onChange={onChangeEmail}
+              value={email}
+         />
+       </Form.Item>
+ 
+       <Form.Item
+         label="Password"
+         name="password"
+         help={messagePass}
+         validateStatus={messagePass?"error":"validating"}
+         rules={[
+           {
+             required: true,
+             message:  'Укажите пароль!',
+           },
+           {
+            len: 8,
+            message:  "Пароль должен быть больше 8 символов" 
+          },
+         ]}
+       >
+         <Input.Password 
+              onChange={onChangePassword}
+              value={password}
+         />
+       </Form.Item>
+ 
+       <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+         <Checkbox>Remember me</Checkbox>
+       </Form.Item>
+ 
+       <Form.Item {...tailLayout} >
+         <Button type="primary" htmlType="submit">
+           Submit
+         </Button>
+       </Form.Item>
+     </Form>
+     </>
+     )}
+     </>
+   );   
 }
 
 export default Register;

@@ -26,7 +26,7 @@ import {tailLayout,layout} from '../helpers/layout';
       
       
        const handleLogin = (event) => {
-              event.preventDefault();
+              
               dispatch(login_action(email,password)).then(()=>{
                             history.push("/");
                             
@@ -43,89 +43,89 @@ import {tailLayout,layout} from '../helpers/layout';
 };
 
 
-return (     
-  <>
- <PageHeader
-        style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
-        history= {history}
-        title="Авторизация"
-        
- />
- { !isLoggindIn && ( 
+ return (     
         <>
- { msg && 
-        (<Space>
-               { msgerror()}
-        </Space>)
- }   
- <Form
- onFinish={ handleLogin}
- {...layout}
- name="basic"
- initialValues={{
-   remember: true,
- }}
+       <PageHeader
+              style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
+              history= {history}
+              title="Авторизация"
+              
+       />
+       { !isLoggindIn && ( 
+              <>
+       { msg && 
+              (<Space>
+                     { msgerror()}
+              </Space>)
+       }   
+       <Form
+       onFinish={ handleLogin}
+       {...layout}
+       name="basic"
+       initialValues={{
+         remember: true,
+       }}
+       
+     >
+        
+       <Form.Item
+
+         label="email"
+         name="email"
+         help={messageEmail}
+         validateStatus={messageEmail?"error":"validating"}
+         rules={[
+           {
+             required: true,
+             message: 'Укажите email!',
+           },
+           {
+            type: "email",
+            message:'Укажите корректный email!'
+          },
+         ]}
+       >
+         <Input  
+              onChange={onChangeEmail}
+              value={email}
+         />
+       </Form.Item>
  
->
-  
- <Form.Item
-
-   label="email"
-   name="email"
-   help={messageEmail}
-   validateStatus={messageEmail?"error":"validating"}
-   rules={[
-     {
-       required: true,
-       message: 'Укажите email!',
-     },
-     {
-      type: "email",
-      message:'Укажите корректный email!'
-    },
-   ]}
- >
-   <Input  
-        onChange={onChangeEmail}
-        value={email}
-   />
- </Form.Item>
-
- <Form.Item
-   label="Password"
-   name="password"
-   help={messagePass}
-   validateStatus={messagePass?"error":"validating"}
-   rules={[
-    {
-      required: true,
-      message:  'Укажите пароль!',
-    },
-    {
-     len: 8,
-     
-     message:  "Пароль должен быть больше 8 символов" 
-   },
-   ]}
- >
-   <Input.Password 
-        onChange={onChangePassword}
-        value={password}
-   />
- </Form.Item>
-
- <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-   <Checkbox>Remember me</Checkbox>
- </Form.Item>
-
- <Form.Item {...tailLayout}>
-   <Button type="primary" htmlType="submit">
-     Submit
-   </Button>
- </Form.Item>
-</Form>
-</>
-)}
-</>
-);   
+       <Form.Item
+         label="Password"
+         name="password"
+         help={messagePass}
+         validateStatus={messagePass?"error":"validating"}
+         rules={[
+          {
+            required: true,
+            message:  'Укажите пароль!',
+          },
+          {
+           len: 8,
+           
+           message:  "Пароль должен быть больше 8 символов" 
+         },
+         ]}
+       >
+         <Input.Password 
+              onChange={onChangePassword}
+              value={password}
+         />
+       </Form.Item>
+ 
+       <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+         <Checkbox>Remember me</Checkbox>
+       </Form.Item>
+ 
+       <Form.Item {...tailLayout}>
+         <Button type="primary" htmlType="submit">
+           Submit
+         </Button>
+       </Form.Item>
+     </Form>
+     </>
+     )}
+     </>
+   );   
 }

@@ -4,7 +4,7 @@ import {authHeader} from './auth_header'
 
 
 
-function updateProfile(email,password){
+ function updateProfile(email,password){
        return axios.put(API_URL + 'profile/',{
              user:{
                     email,
