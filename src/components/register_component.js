@@ -79,8 +79,7 @@ const Register = ({history})=>{
          label="email"
          name="email"
          messageVariables={messageEmail}
-         help={messageEmail}
-         validateStatus={messageEmail?"error":"validating"}
+        
          rules={[
            {
              required: true,
@@ -105,8 +104,7 @@ const Register = ({history})=>{
        <Form.Item
          label="Password"
          name="password"
-         help={messagePass}
-         validateStatus={messagePass?"error":"validating"}
+        
          rules={[
            {
              required: true,

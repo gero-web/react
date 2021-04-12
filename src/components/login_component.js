@@ -72,8 +72,7 @@ import {tailLayout,layout} from '../helpers/layout';
 
          label="email"
          name="email"
-         help={messageEmail}
-         validateStatus={messageEmail?"error":"validating"}
+        
          rules={[
            {
              required: true,
@@ -94,8 +93,7 @@ import {tailLayout,layout} from '../helpers/layout';
        <Form.Item
          label="Password"
          name="password"
-         help={messagePass}
-         validateStatus={messagePass?"error":"validating"}
+       
          rules={[
           {
             required: true,
