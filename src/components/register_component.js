@@ -14,14 +14,13 @@ const Register = ({history})=>{
        const [password, setPassword] = useState("");
       
        const {isLoggindIn} = useSelector(state => state.auth_reducers)
-       const { messageEmail,messagePass,message:msg } = useSelector(state => state.message_reducers);
+       const { message:msg } = useSelector(state => state.message_reducers);
        const dispatch = useDispatch();
 
     
 
        const onChangeEmail = (event) => {
-              const email = event.target.value;
-             
+              const email = event.target.value;    
               setEmail(email);
        };
           
@@ -31,17 +30,16 @@ const Register = ({history})=>{
        };
 
        const handleRegister = (event) => {
-             console.log(1)
               dispatch(register_action(email,password)).then(()=>{
                              history.push("/login");
                      }).catch(()=>{
                           
                      });
               
-
        }
 
  const msgerror = () => {
+              console.log("1");
               message.error(msg);
 };
 
@@ -78,8 +76,7 @@ const Register = ({history})=>{
        <Form.Item
          label="email"
          name="email"
-         messageVariables={messageEmail}
-        
+               
          rules={[
            {
              required: true,

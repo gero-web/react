@@ -1,4 +1,4 @@
-import { SET_MESSAGE,SET_MESSAGE_PASSWORD,CLEAR_MESSAGE, SET_MESSAGE_EMAIL } from "../actions/type";
+import { SET_MESSAGE,CLEAR_MESSAGE } from "../actions/type";
 
 
 const initialState = {messagePass:"",messageEmail:"",message:""};
@@ -11,18 +11,9 @@ export default  function f (state = initialState,action){
               case SET_MESSAGE:
                      return {message:payload}
 
-              case SET_MESSAGE_PASSWORD:
-                     return {
-                            ...state,
-                            messagePass:payload
-                     }
-              case SET_MESSAGE_EMAIL:
-                            return {
-                                   ...state,
-                                   messageEmail:payload
-              }
+             
               case CLEAR_MESSAGE:
-                     return {messagePass:"",messageEmail:"",message:""}        
+                     return {message:""}        
        
               default:
                      return state;

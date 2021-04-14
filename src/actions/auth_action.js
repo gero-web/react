@@ -19,13 +19,13 @@ const msgEmail = (errors) => {
        return errors.email;
 }
 
-export const register_action = (email,password) => (dispath) => {
+export const register_action = (email,password) => (dispatch) => {
        return auth_service.registration_user(email,password).then((response)=>{
-              dispath({
+              dispatch({
                      type:REGISTER_SUCCESS,
               });
 
-              dispath({
+              dispatch({
                      type:SET_MESSAGE,
                      payload:response.data.message,
               })
@@ -35,20 +35,22 @@ export const register_action = (email,password) => (dispath) => {
               const errors = error.response &&
                      error.response.data &&
                      error.response.data.errors;
-            
-              dispath({
+                     console.log(JSON.stringify(errors));
+               dispatch({
                      type:REGISTER_FAIL,
               });
 
-              dispath({
-                     type:SET_MESSAGE_EMAIL,
-                     payload:msgEmail(errors)
+              console.log(errors);
+              dispatch({
+                     type:SET_MESSAGE,
+                     payload:errors.email[0]
               });
-
-              dispath({
-                     type:SET_MESSAGE_PASSWORD,
-                     payload:msgPass(errors)
-              });
+              if(errors.error){
+                     dispatch({
+                            type:SET_MESSAGE,
+                            payload:errors.error
+                     });
+              }
 
               return Promise.reject();
        });
@@ -68,24 +70,11 @@ export const login_action = (email,password) => (dispatch) =>{
                      const errors = error.response &&
                             error.response.data &&
                             error.response.data.errors;
-                     console.log(JSON.stringify(errors));
+                     
                      dispatch({
                             type:LOGIN_FAIL,
                      });
-                     if( email in errors ){
-
-                            dispatch({
-                                   type:SET_MESSAGE_EMAIL,
-                                   payload:msgEmail(errors)
-                            });
-                     }
-                     if(password in errors){
-
-                            dispatch({
-                                   type:SET_MESSAGE_PASSWORD,
-                                   payload:msgPass(errors)
-                            });
-                     }
+                    
                      dispatch({
                                    type:SET_MESSAGE,
                                    payload:errors.error

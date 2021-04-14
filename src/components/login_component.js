@@ -11,7 +11,7 @@ import {tailLayout,layout} from '../helpers/layout';
        const [password, setPassword] = useState("");
 
        const {isLoggindIn} = useSelector(state=>state.auth_reducers);
-       const { messageEmail,messagePass,message:msg } = useSelector(state => state.message_reducers);
+       const { message:msg } = useSelector(state => state.message_reducers);
        const dispatch = useDispatch();
 
        const onChangeEmail = (event) => {
