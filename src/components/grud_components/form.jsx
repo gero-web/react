@@ -78,11 +78,9 @@ const FormJSX = ({id,name,desk,onhandleTask}) =>{
          />
        </Form.Item>
  
-      
- 
        <Form.Item {...tailLayout}>
          <Button type="primary" onClick={handleTask} htmlType="submit">
-           Submit
+           Сохранить!
          </Button>
        </Form.Item>
      </Form>
