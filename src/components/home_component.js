@@ -33,7 +33,7 @@ import { Button} from 'antd';
                 pathname:'/edit',
                 query: record
                 
-          }}>Edit </Link>
+          }}>Изменить </Link>
           )}
           <Link to={{
                 pathname:'/detail',
@@ -44,7 +44,7 @@ import { Button} from 'antd';
                 },
                
   
-          }} >Detail </Link>
+          }} >Подробней </Link>
           <a onClick={(event)=>{
              event.preventDefault();
              task.delateTask(record.pk).then(response=>{
@@ -52,7 +52,7 @@ import { Button} from 'antd';
              }).catch(res=>{
                console.log(res);
              });
-          }} >Delete</a>
+          }} >Удалить</a>
         </Space>
       ),
     },

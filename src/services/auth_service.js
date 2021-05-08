@@ -1,6 +1,5 @@
 import 'axios';
 import axios from 'axios';
-
 import API_URL from './API';
 
 function  _storage(data){
