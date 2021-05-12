@@ -2,6 +2,7 @@
 import {useState} from "react"
 import {useDispatch,useSelector} from "react-redux";
 import {login_action} from "../actions/auth_action";
+import {SET_MESSAGE}  from "../actions/type";
 import { Form, Input, Button, Space,Checkbox,message } from 'antd';
 import  PageHeader  from './pageHeader';
 import {tailLayout,layout} from '../helpers/layout';
@@ -40,6 +41,10 @@ import {tailLayout,layout} from '../helpers/layout';
      
  const msgerror = () => {
               message.error(msg);
+              dispatch({
+                type:SET_MESSAGE,
+                payload:""
+         });
 };
 
 
@@ -102,7 +107,7 @@ import {tailLayout,layout} from '../helpers/layout';
           {
            len: 8,
            
-           message:  "Пароль должен быть больше 8 символов" 
+           message:  "Пароль должен быть не больше 8 символов" 
          },
          ]}
        >

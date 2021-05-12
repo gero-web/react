@@ -2,13 +2,14 @@ import  React from "react";
 import {useEffect,useState} from 'react';
 import PageHeader from './pageHeader'; 
 import task from '../services/grud_service';
-import { Table,  Space } from 'antd';
+import { Table,  Space, Popconfirm, message} from 'antd';
 import { Link } from "react-router-dom";
 import {useSelector} from "react-redux";
 import { Button} from 'antd';
 
 
  const Home = ({history}) =>{
+
   const {isLoggindIn} = useSelector(state => state.auth_reducers)
   const columns = [
     {
@@ -42,23 +43,29 @@ import { Button} from 'antd';
                        desc:record.desctiption
                 
                 },
-               
-  
           }} >Подробней </Link>
-          <a onClick={(event)=>{
-             event.preventDefault();
-             task.delateTask(record.pk).then(response=>{
+           <Popconfirm title="Вы действительно хотите удалить, строку?"               
+            okText="Да" 
+            onConfirm={()=>{
+              task.delateTask(record.pk).then(response=>{
                 window.location.reload();
-             }).catch(res=>{
-               console.log(res);
-             });
-          }} >Удалить</a>
+              }).catch(res=>{
+                message.error("Вы не авторизованы или у вас нет прав");
+              });   
+            }}
+            cancelText="Нет">
+            <a onClick={(event)=>{
+              event.preventDefault();    
+                 
+            }} >Удалить</a>
+        
+            </Popconfirm>
         </Space>
       ),
     },
   ];
 
- 
+     
        const [data, setData] = useState([]);
        useEffect(() => {
               task.getAllTask().then((response)=>{

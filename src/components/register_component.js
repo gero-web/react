@@ -1,7 +1,7 @@
 
 import {useState,useRef} from "react"
 import {useDispatch,useSelector} from "react-redux";
-
+import {SET_MESSAGE}  from "../actions/type";
 import { register_action} from "../actions/auth_action";
 import { Form, Input, Button,Alert, Space,Checkbox,message } from 'antd';
 import  PageHeader  from './pageHeader';
@@ -39,8 +39,11 @@ const Register = ({history})=>{
        }
 
  const msgerror = () => {
-              console.log("1");
               message.error(msg);
+              dispatch({
+                type:SET_MESSAGE,
+                payload:""
+         });
 };
 
 
@@ -109,7 +112,7 @@ const Register = ({history})=>{
            },
            {
             len: 8,
-            message:  "Пароль должен быть больше 8 символов" 
+            message:  "Пароль должен быть не больше 8 символов" 
           },
          ]}
        >
