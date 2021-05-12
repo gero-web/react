@@ -5,7 +5,7 @@ import {useEffect,useState} from "react";
 import Register from "./components/register_component";
 import {Login} from "./components/login_component";
 import Profile from "./components/profile_component";
-import { Router, Switch, Route, Link } from "react-router-dom";
+import { Router,  Route, Link, HashRouter } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
 import {logout_action} from "./actions/auth_action"
 import {history} from "./helpers/history_helper";
@@ -81,7 +81,7 @@ function App() {
       </Header>       
       <Content style={{ padding: '0 50px',margin:'50px 0 0 0' }}>
       <div className="site-layout-content">
-          <Switch>
+          <HashRouter>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/login" component={Login} />
@@ -90,7 +90,7 @@ function App() {
             <Route exact path="/detail" component={Detail} /> 
             <Route exact path="/edit" component={Edit} />   
             <Route exact path="/add" component={Create} />         
-          </Switch>
+          </HashRouter>
         </div>
     </Content>    
      
