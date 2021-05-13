@@ -1,20 +1,19 @@
 
-import {useState} from "react"
+import {useState,useRef} from "react"
 import {useDispatch,useSelector} from "react-redux";
 import {login_action} from "../actions/auth_action";
+import { Form, Input, Button,Modal } from 'antd';
+import {layout} from '../helpers/layout';
 import {SET_MESSAGE}  from "../actions/type";
-import { Form, Input, Button, Space,Checkbox,message } from 'antd';
-import  PageHeader  from './pageHeader';
-import {tailLayout,layout} from '../helpers/layout';
- export const Login = ({history})=>{
-      
+const Login = ({history,IsVisible,msgError})=>{
+         
+       const [visibleLogin,setVisibleLogin] = IsVisible;
        const [email, setEmail] = useState("");
        const [password, setPassword] = useState("");
-
        const {isLoggindIn} = useSelector(state=>state.auth_reducers);
-       const { message:msg } = useSelector(state => state.message_reducers);
+       
        const dispatch = useDispatch();
-
+       
        const onChangeEmail = (event) => {
               const email = event.target.value;
               setEmail(email);
@@ -29,41 +28,53 @@ import {tailLayout,layout} from '../helpers/layout';
        const handleLogin = (event) => {
               
               dispatch(login_action(email,password)).then(()=>{
-                            history.push("/");
-                            
+                          closeModel();                            
                      }).catch(()=>{
-                           
+                        
               });
-              
-
+      
        }
 
-     
- const msgerror = () => {
-              message.error(msg);
-              dispatch({
-                type:SET_MESSAGE,
-                payload:""
-         });
-};
-
-
- return (     
-        <>
-       <PageHeader
-              style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
-              history= {history}
-              title="Авторизация"
-              
-       />
+       const okCloseModel = () =>{
+        setTimeout(() => {        
+        }, 2000);
+      }
+      const closeModel = () => {
+        setVisibleLogin(false);
+        msgerror();
+      }
+    
+      const msgerror = () => {
+    
+        dispatch({
+          type:SET_MESSAGE,
+          payload:""
+  });
+      }
+ return (    
+        <Modal
+          title="Авторизация"
+          centered
+          visible={visibleLogin}
+          onOk = {okCloseModel}     
+          onCancel = {closeModel}
+          footer={[
+            <>
+               <Button form="loginForm" key="cansle" onClick={closeModel} type="danger" htmlType="reset">
+                Отмена
+            </Button>
+              <Button form="loginForm" key="submit" onClick={okCloseModel} type="primary" htmlType="submit">
+                Ok
+            </Button>
+         </>
+          ]}
+        >
+    
        { !isLoggindIn && ( 
               <>
-       { msg && 
-              (<Space>
-                     { msgerror()}
-              </Space>)
-       }   
+     
        <Form
+       id="loginForm"
        onFinish={ handleLogin}
        {...layout}
        name="basic"
@@ -72,7 +83,18 @@ import {tailLayout,layout} from '../helpers/layout';
        }}
        
      >
+         <div
+       style={{
+        margin: "5",
+        width: "60%",
+        color:"#cc0000",
+        border: "1px",
         
+       }}
+       >
+            {msgError}
+    
+       </div>
        <Form.Item
 
          label="email"
@@ -117,18 +139,14 @@ import {tailLayout,layout} from '../helpers/layout';
          />
        </Form.Item>
  
-       <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-         <Checkbox>Remember me</Checkbox>
-       </Form.Item>
+    
  
-       <Form.Item {...tailLayout}>
-         <Button type="primary" htmlType="submit">
-           Submit
-         </Button>
-       </Form.Item>
+      
      </Form>
      </>
      )}
-     </>
-   );   
+     </Modal>
+   )
 }
+
+export default Login;

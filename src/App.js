@@ -3,28 +3,30 @@ import './App.css';
 import 'antd/dist/antd.css';
 import {useEffect,useState} from "react";
 import Register from "./components/register_component";
-import {Login} from "./components/login_component";
+import Login from "./components/login_component";
 import Profile from "./components/profile_component";
 import { Router,  Route, Link, Switch } from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
 import {logout_action} from "./actions/auth_action"
 import {history} from "./helpers/history_helper";
 import Home from "./components/home_component";
+
 import Edit from "./components/grud_components/edit_component";
 import Create from "./components/grud_components/create_component";
 import Detail from "./components/grud_components/detail_component";
 import {clearMessage} from "./actions/message_action";
-import { Layout, Menu } from 'antd';
+import { Button, Layout, Menu } from 'antd';
 
 
 
 
 function App() {
   const {isLoggindIn,user} = useSelector(state => state.auth_reducers)
-  
+  const [visibleModalLogin,setVisibleModalLogin] = useState(false);
+  const  [visibleModalRegister,setVisibleModalRegister] = useState(false);
   const dispatch = useDispatch();
   const { Header, Content } = Layout;
-  
+  const { message:msg } = useSelector(state => state.message_reducers);
   const onLogout = (event) => {
     event.preventDefault();
     dispatch(logout_action());
@@ -51,15 +53,26 @@ function App() {
           { !isLoggindIn && (  
             <>     
                 <Menu.Item key="2">  
-                  <Link to={"/login"} >
+                  <a href="#" onClick={
+                    (e)=>{
+                      e.preventDefault();
+                      setVisibleModalLogin(true);  
+                    }
+                  } >
+                    
                     Войти
-                  </Link>
+                  </a>
                 </Menu.Item>
                 
                 <Menu.Item key="3">
-                  <Link to={"/register"} >
+                <a href="#" onClick={
+                    (e)=>{
+                      e.preventDefault();
+                      setVisibleModalRegister(true);  
+                    }
+                  } >
                   Регистрация
-                  </Link>
+                  </a>
                 </Menu.Item>              
                 </>
               )}
@@ -83,15 +96,15 @@ function App() {
       <div className="site-layout-content">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
+            <Route exact path="/home" component={Home} />          
             <Route exact path="/profile" component={Profile} />  
             <Route exact path="/detail" component={Detail} /> 
             <Route exact path="/edit" component={Edit} />   
             <Route exact path="/add" component={Create} />         
           </Switch>
         </div>
+        <Login msgError={msg} IsVisible={[visibleModalLogin,setVisibleModalLogin]}/>
+        <Register msgError={msg} IsVisible={[visibleModalRegister,setVisibleModalRegister]}/>
     </Content>    
      
         </Layout>

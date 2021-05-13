@@ -1,20 +1,18 @@
 
 import {useState,useRef} from "react"
 import {useDispatch,useSelector} from "react-redux";
-import {SET_MESSAGE}  from "../actions/type";
-import { register_action} from "../actions/auth_action";
-import { Form, Input, Button,Alert, Space,Checkbox,message } from 'antd';
-import  PageHeader  from './pageHeader';
+import { register_action,login_action} from "../actions/auth_action";
+import { Form, Input, Button,Modal, Space,Checkbox,Tooltip } from 'antd';
+import { SET_MESSAGE} from "../actions/type";
 import {tailLayout,layout} from '../helpers/layout';
 
-const Register = ({history})=>{
+const Register = ({history,IsVisible,msgError})=>{
     
 
        const [email, setEmail] = useState("");
        const [password, setPassword] = useState("");
-      
+       const [visibleRegister,setVisibleRegister] = IsVisible;
        const {isLoggindIn} = useSelector(state => state.auth_reducers)
-       const { message:msg } = useSelector(state => state.message_reducers);
        const dispatch = useDispatch();
 
     
@@ -31,42 +29,57 @@ const Register = ({history})=>{
 
        const handleRegister = (event) => {
               dispatch(register_action(email,password)).then(()=>{
-                             history.push("/login");
-                     }).catch(()=>{
+                        dispatch(login_action(email,password)).then(()=>{             
+                                closeModel();
                           
+                          }).catch(()=>{ });
+                     }).catch(()=>{
+                     
+                      console.log(1);
                      });
               
        }
-
- const msgerror = () => {
-              message.error(msg);
-              dispatch({
-                type:SET_MESSAGE,
-                payload:""
-         });
-};
+       const okCloseModel = () =>{
+        setTimeout(() => {        
+        }, 1000);
+      }
+      const closeModel = () => {
+          setVisibleRegister(false);
+          msgerror();
+      }
+      const msgerror = () => {
+    
+        dispatch({
+          type:SET_MESSAGE,
+          payload:""
+  });
+  };
 
 
  return ( 
-       
         <>  
-           <PageHeader
-              style={{ padding: '0 50px',margin:'-30px 0 0 0' }}
-              history= {history}
-              title="Регистрация"
-              
-       />
-
-       { !isLoggindIn && ( 
+        <Modal
+          title="Регистрация"
+          centered
+          visible={visibleRegister}
+          onCancel = {closeModel}
+          footer={[
+            <>
+              <Button form="registerForm" key="cansle" onClick={closeModel} type="danger" htmlType="reset">
+                Отмена
+            </Button>
+              <Button form="registerForm" key="submit" onClick={okCloseModel} type="primary" htmlType="submit">
+                Ok
+            </Button>
+         </>
+          ]}
+        >
+{ !isLoggindIn && ( 
               <>
-       { msg && 
-              (<Space>
-                     { msgerror()}
-              </Space>)
-       }   
+    
        <Form
        onFinish={handleRegister}
-     
+       id="registerForm"
        {...layout}
        name="basic"
       
@@ -75,7 +88,18 @@ const Register = ({history})=>{
        }}
        
      >
-       
+       <div
+       style={{
+        margin: "5",
+        width: "60%",
+        color:"#cc0000",
+        border: "1px",
+        
+       }}
+       >
+            {msgError}
+    
+       </div>
        <Form.Item
          label="email"
          name="email"
@@ -126,14 +150,10 @@ const Register = ({history})=>{
          <Checkbox>Remember me</Checkbox>
        </Form.Item>
  
-       <Form.Item {...tailLayout} >
-         <Button type="primary" htmlType="submit">
-           Submit
-         </Button>
-       </Form.Item>
      </Form>
      </>
      )}
+     </Modal>
      </>
    );   
 }
