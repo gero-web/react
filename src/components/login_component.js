@@ -5,7 +5,7 @@ import {login_action} from "../actions/auth_action";
 import { Form, Input, Button,Modal } from 'antd';
 import {layout} from '../helpers/layout';
 import {SET_MESSAGE}  from "../actions/type";
-const Login = ({history,IsVisible,msgError})=>{
+const Login = ({IsVisible,msgError})=>{
          
        const [visibleLogin,setVisibleLogin] = IsVisible;
        const [email, setEmail] = useState("");

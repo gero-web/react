@@ -6,7 +6,7 @@ import { Form, Input, Button,Modal, Checkbox } from 'antd';
 import { SET_MESSAGE} from "../actions/type";
 import {tailLayout,layout} from '../helpers/layout';
 
-const Register = ({history,IsVisible,msgError})=>{
+const Register = ({IsVisible,msgError})=>{
     
 
        const [email, setEmail] = useState("");
