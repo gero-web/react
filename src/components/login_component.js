@@ -127,8 +127,8 @@ const Login = ({history,IsVisible,msgError})=>{
             message:  'Укажите пароль!',
           },
           {
-            min: 4,     
-           message:  "Пароль должен быть  больше 4 символов" 
+            min: 8,     
+            message:  "Пароль должен быть  больше 8 символов" 
          },
          ]}
        >
