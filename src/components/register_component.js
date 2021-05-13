@@ -1,8 +1,8 @@
 
-import {useState,useRef} from "react"
+import {useState} from "react"
 import {useDispatch,useSelector} from "react-redux";
 import { register_action,login_action} from "../actions/auth_action";
-import { Form, Input, Button,Modal, Space,Checkbox,Tooltip } from 'antd';
+import { Form, Input, Button,Modal, Checkbox } from 'antd';
 import { SET_MESSAGE} from "../actions/type";
 import {tailLayout,layout} from '../helpers/layout';
 
