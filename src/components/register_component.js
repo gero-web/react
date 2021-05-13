@@ -135,7 +135,7 @@ const Register = ({history,IsVisible,msgError})=>{
              message:  'Укажите пароль!',
            },
            {
-            len: 4,     
+            min: 4,     
             message:  "Пароль должен быть  больше 4 символов" 
           },
          ]}
