@@ -52,7 +52,7 @@ const Login = ({IsVisible,msgError})=>{
   });
       }
  return (    
-        <Modal
+        <Modal key="ModalLogin"
           title="Авторизация"
           centered
           visible={visibleLogin}
@@ -74,6 +74,7 @@ const Login = ({IsVisible,msgError})=>{
               <>
      
        <Form
+       key="FormLogin"
        id="loginForm"
        onFinish={ handleLogin}
        {...layout}

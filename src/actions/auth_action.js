@@ -12,13 +12,6 @@ import {
 import auth_service from "../services/auth_service";
 
 
-const msgPass = (errors) => {
-       return errors.password;
-}
-const msgEmail = (errors) => {
-       return errors.email;
-}
-
 export const register_action = (email,password) => (dispatch) => {
        return auth_service.registration_user(email,password).then((response)=>{
               dispatch({

@@ -103,8 +103,8 @@ function App() {
             <Route exact path="/add" component={Create} />         
           </Switch>
         </div>
-        <Login msgError={msg} IsVisible={[visibleModalLogin,setVisibleModalLogin]}/>
-        <Register msgError={msg} IsVisible={[visibleModalRegister,setVisibleModalRegister]}/>
+        <Login key="login" msgError={msg} IsVisible={[visibleModalLogin,setVisibleModalLogin]}/>
+        <Register key="register" msgError={msg} IsVisible={[visibleModalRegister,setVisibleModalRegister]}/>
     </Content>    
      
         </Layout>

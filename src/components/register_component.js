@@ -30,7 +30,7 @@ const Register = ({IsVisible,msgError})=>{
        const handleRegister = (event) => {
               dispatch(register_action(email,password)).then(()=>{
                         dispatch(login_action(email,password)).then(()=>{             
-                                closeModel();
+                                closeModelRegister();
                           
                           }).catch(()=>{ });
                      }).catch(()=>{
@@ -39,11 +39,11 @@ const Register = ({IsVisible,msgError})=>{
                      });
               
        }
-       const okCloseModel = () =>{
+       const okCloseModelRegister = () =>{
         setTimeout(() => {        
         }, 1000);
       }
-      const closeModel = () => {
+      const closeModelRegister = () => {
           setVisibleRegister(false);
           msgerror();
       }
@@ -58,17 +58,17 @@ const Register = ({IsVisible,msgError})=>{
 
  return ( 
         <>  
-        <Modal
+        <Modal key="ModalRegister"
           title="Регистрация"
           centered
           visible={visibleRegister}
-          onCancel = {closeModel}
+          onCancel = {closeModelRegister}
           footer={[
             <>
-              <Button form="registerForm" key="cansle" onClick={closeModel} type="danger" htmlType="reset">
+              <Button form="registerForm" key="cansle" onClick={closeModelRegister} type="danger" htmlType="reset">
                 Отмена
             </Button>
-              <Button form="registerForm" key="submit" onClick={okCloseModel} type="primary" htmlType="submit">
+              <Button form="registerForm" key="submit" onClick={okCloseModelRegister} type="primary" htmlType="submit">
                 Ok
             </Button>
          </>
@@ -78,6 +78,7 @@ const Register = ({IsVisible,msgError})=>{
               <>
     
        <Form
+        key="FormRegister"
        onFinish={handleRegister}
        id="registerForm"
        {...layout}
