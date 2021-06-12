@@ -49,7 +49,7 @@ import { Button} from 'antd';
             okText="Да" 
             onConfirm={()=>{
               task.delateTask(record.pk).then(response=>{
-                history.go(0);
+                getDate();     
               }).catch(res=>{
                 message.error("Вы не авторизованы или у вас нет прав");
               });   
@@ -65,13 +65,17 @@ import { Button} from 'antd';
       ),
     },
   ];
-
+  const [data, setData] = useState([]);
+       const getDate = () =>{
+        task.getAllTask().then((response)=>{
+          setData(response.data.map((item,index)=> {return {...item,key:item.pk}}));      
+        })
+       }
      
-       const [data, setData] = useState([]);
+      
        useEffect(() => {
               task.getAllTask().then((response)=>{
-                     setData(response.data.map((item,index)=> {return {...item,key:item.pk}}));
-                     
+                getDate();                    
               })
        }, [])
       
