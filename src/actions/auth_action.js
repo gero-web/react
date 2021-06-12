@@ -5,8 +5,7 @@ import {
        LOGIN_SUCCESS,
        LOGOUT,
        SET_MESSAGE,
-       SET_MESSAGE_EMAIL,
-       SET_MESSAGE_PASSWORD,
+
 } from './type';
 
 import auth_service from "../services/auth_service";
@@ -28,7 +27,7 @@ export const register_action = (email,password) => (dispatch) => {
               const errors = error.response &&
                      error.response.data &&
                      error.response.data.errors;
-                     console.log(JSON.stringify(errors));
+                     
                dispatch({
                      type:REGISTER_FAIL,
               });
@@ -53,10 +52,11 @@ export const login_action = (email,password) => (dispatch) =>{
 
               return auth_service.login(email,password).then((response)=>{
                     
-
+                     
                      dispatch({
                             type:LOGIN_SUCCESS,
-                            payload:{user:response}
+                          
+                            payload:{user:JSON.parse(localStorage.getItem('user'))}
                      });
                      return Promise.resolve();
               },(error)=>{
@@ -78,5 +78,6 @@ export const login_action = (email,password) => (dispatch) =>{
 };
 
 export const logout_action = () => {
+       auth_service.logout();
        return {type:LOGOUT};
 } 

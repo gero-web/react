@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import 'antd/dist/antd.css';
 import {useEffect,useState} from "react";
@@ -16,13 +16,13 @@ import Edit from "./components/grud_components/edit_component";
 import Create from "./components/grud_components/create_component";
 import Detail from "./components/grud_components/detail_component";
 import {clearMessage} from "./actions/message_action";
-import { Button, Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 
 
 
 
 function App() {
-  const {isLoggindIn,user} = useSelector(state => state.auth_reducers)
+  const {isLoggindIn,user} = useSelector(state => state.auth_reducers);
   const [visibleModalLogin,setVisibleModalLogin] = useState(false);
   const  [visibleModalRegister,setVisibleModalRegister] = useState(false);
   const dispatch = useDispatch();
@@ -38,7 +38,11 @@ function App() {
     history.listen((location) => dispatch(clearMessage()));
   
   }, [dispatch]);
-  
+
+  const ProfileWarper = ({history}) =>{
+    console.log(isLoggindIn);
+    return <Profile history={history} user={user} />
+  }
   return (
     <Router history = {history}>
     <div className="App">
@@ -86,7 +90,9 @@ function App() {
                 </Menu.Item>    
                     <Menu.Item key="5">
                     <Link onClick={onLogout} to={'/'} className="nav-link">
-                      Выход
+                   
+                       Выход
+                       
                     </Link>
                     </Menu.Item>
                   </>         
@@ -98,7 +104,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />          
-            <Route exact path="/profile" component={Profile} />  
+            <Route exact path="/profile" component={ProfileWarper}  />  
             <Route exact path="/detail" component={Detail} /> 
             <Route exact path="/edit" component={Edit} />   
             <Route exact path="/add" component={Create} />         

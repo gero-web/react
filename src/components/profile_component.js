@@ -1,42 +1,31 @@
-import {useRef,useState,useEffect} from "react"
+import {useState,useEffect} from "react"
 import {useDispatch,useSelector} from "react-redux";
 import profile from "../services/user_service";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
 import {login_action,logout_action} from "../actions/auth_action";
-import {required,validEmail,vpassword} from "./validate_form"
-
-const Profile = ({history})=>{
+import {layout} from '../helpers/layout';
+import { Form, Input, Button,Modal, Checkbox } from 'antd';
+const Profile = ({history,user})=>{
        
-       const refForm = useRef();
-       const refCheck = useRef();
+       
 
-       const [email, setEmail] = useState("");
-       const [password, setPassword] = useState("");
-
-      
-       const [successful, setSuccessful] = useState(false);
-    
-       const {isLoggindIn} = useSelector(state=>state.auth_reducers);
-       const { messageEmail,messagePass,message } = useSelector(state => state.message_reducers);
+       const [email, setEmail] = useState('');
+       const [password, setPassword] = useState('');
        const dispatch = useDispatch();
-
-
       
-       const { user  } = useSelector(state => state.auth_reducers)
       useEffect(() => {
 
+         
             if(user && user.user)
               { 
                      setEmail(user.user.email);
                      setPassword(user.user.password);  
               }
               else{
+                  
                      history.push("/");
               }
             
-      }, [user])
+      }, [])
      
 
        const onChangeEmail = (event) =>{
@@ -49,83 +38,95 @@ const Profile = ({history})=>{
               setPassword(password);
        }
       const handleProfile = (event) =>{
-              event.preventDefault();
-       
-              refForm.current.validateAll();
-              if (refCheck.current.context._errors.length === 0) {
+            
               profile(email,password).then((response)=>{
                      dispatch(logout_action);
                      dispatch(login_action(email,password));
-                     setSuccessful(true);
+                     history.push("/");
 
               }).catch(response => {
-                     setSuccessful(false);
+                   
               });
-       }
+       
       }
 
       return (
-       <div className="col-md-12">
-       <div className="card card-container">
-
-       <Form onSubmit={handleProfile} ref={refForm}>
-              {isLoggindIn && (
-              <div>
-                     <div className="form-group">
-                     <label htmlFor="email">Email</label>
-                     <Input
-                     type="text"
-                     className="form-control"
-                     name="email"
-                     value={email}
-                     onChange={onChangeEmail}
-                     validations={[required, validEmail]}
-                     />
-              {messageEmail && (
-                     <div className="form-group">
-                            <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
-                            {messageEmail}
-                            </div>
-                     </div>)}
-              </div>
-
-       <div className="form-group">
-         <label htmlFor="password">Password</label>
-         <Input
-           type="password"
-           className="form-control"
-           name="password"
-           value={password}
-           onChange={onChangePassword}
-           validations={[required, vpassword]}
+       <Form
+        key="FormRegister"
+       onFinish={handleProfile}
+       id="registerForm"
+       {...layout}
+       name="basic"
+      
+       initialValues={{
+         remember: true,
+       }}
+       
+     >
+       <div
+       style={{
+        margin: "5",
+        width: "60%",
+        color:"#cc0000",
+        border: "1px",
+        
+       }}
+       >
+      
+    
+       </div>
+       <Form.Item
+         label="email"
+         name="email"
+               
+         rules={[
+           {
+             required: true,
+             message: 'Укажите email!',
+           },
+           {
+             type:"email",
+             
+             message:'Укажите корректный email!'
+           },
+          
+          
+         ]}
+       >
+          
+         <Input  
+              onChange={onChangeEmail}
+              value={email}
          />
-       {messagePass && (
-       <div className="form-group">
-              <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
-              {messagePass}
-              </div>
-       </div>
-   )}
-       </div>
-
-       <div className="form-group">
-         <button className="btn btn-primary btn-block">Sign Up</button>
-       </div>
-     </div>
-   )}
- {message && (
-       <div className="form-group">
-              <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
-              {message}
-              </div>
-       </div>
-   )}
-  
-   <CheckButton style={{ display: "none" }} ref={refCheck} />          
-</Form>
-
-</div>
-</div>
+       </Form.Item>
+ 
+       <Form.Item
+         label="Password"
+         name="password"
+        
+         rules={[
+           {
+             required: true,
+             message:  'Укажите пароль!',
+           },
+           {
+            min: 8,     
+            message:  "Пароль должен быть  больше 8 символов" 
+          },
+         ]}
+       >
+         <Input.Password 
+              onChange={onChangePassword}
+              value={password}
+         />
+       </Form.Item>
+       <Form.Item>
+       <Button type="primary" htmlType="submit">
+          Ok!
+        </Button>
+       </Form.Item>
+ 
+     </Form>
 );
 
 }

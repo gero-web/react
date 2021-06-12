@@ -5,7 +5,7 @@ import {
        LOGIN_SUCCESS,
        LOGIN_FAIL,
 } from "../actions/type";
-import auth_service from "../services/auth_service";
+
 const user = JSON.parse(localStorage.getItem('user'));
 const intialState = user ? 
        { isLoggindIn: true, user}:
@@ -40,7 +40,7 @@ export default function auth(state = intialState,action) {
                             user:null,
               }
               case LOGOUT:
-                     auth_service.logout();
+              
                      return {
                             ...state,
                             isLoggindIn: false,

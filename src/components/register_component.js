@@ -35,7 +35,7 @@ const Register = ({IsVisible,msgError})=>{
                           }).catch(()=>{ });
                      }).catch(()=>{
                      
-                      console.log(1);
+                      
                      });
               
        }

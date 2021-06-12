@@ -28,23 +28,23 @@ const Login = ({IsVisible,msgError})=>{
        const handleLogin = (event) => {
               
               dispatch(login_action(email,password)).then(()=>{
-                          closeModel();                            
+                          closeModelLogin();                            
                      }).catch(()=>{
                         
               });
       
        }
 
-       const okCloseModel = () =>{
+       const okCloseModelLogin = () =>{
         setTimeout(() => {        
         }, 2000);
       }
-      const closeModel = () => {
+      const closeModelLogin = () => {
         setVisibleLogin(false);
-        msgerror();
+        msgerrorLogin();
       }
     
-      const msgerror = () => {
+      const msgerrorLogin = () => {
     
         dispatch({
           type:SET_MESSAGE,
@@ -56,14 +56,14 @@ const Login = ({IsVisible,msgError})=>{
           title="Авторизация"
           centered
           visible={visibleLogin}
-          onOk = {okCloseModel}     
-          onCancel = {closeModel}
+          onOk = {okCloseModelLogin}     
+          onCancel = {closeModelLogin}
           footer={[
             <>
-               <Button form="loginForm" key="cansle" onClick={closeModel} type="danger" htmlType="reset">
+               <Button form="loginForm" key="cansle" onClick={closeModelLogin} type="danger" htmlType="reset">
                 Отмена
             </Button>
-              <Button form="loginForm" key="submit" onClick={okCloseModel} type="primary" htmlType="submit">
+              <Button form="loginForm" key="submit" onClick={okCloseModelLogin} type="primary" htmlType="submit">
                 Ok
             </Button>
          </>

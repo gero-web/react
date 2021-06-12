@@ -1,6 +1,6 @@
 import  React from "react";
 import {tailLayout,layout} from '../../helpers/layout';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 import {useEffect,useState} from "react"
 
 
