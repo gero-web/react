@@ -48,7 +48,7 @@ import { Button} from 'antd';
             okText="Да" 
             onConfirm={()=>{
               task.delateTask(record.pk).then(response=>{
-                history.push("/home");
+                history.go(0);
               }).catch(res=>{
                 message.error("Вы не авторизованы или у вас нет прав");
               });   
