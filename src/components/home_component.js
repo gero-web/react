@@ -3,7 +3,7 @@ import {useEffect,useState} from 'react';
 import PageHeader from './pageHeader'; 
 import task from '../services/grud_service';
 import { Table,  Space, Popconfirm, message} from 'antd';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {useSelector} from "react-redux";
 import { Button} from 'antd';
 
@@ -11,6 +11,7 @@ import { Button} from 'antd';
  const Home = ({history}) =>{
 
   const {isLoggindIn} = useSelector(state => state.auth_reducers)
+ 
   const columns = [
     {
       title: 'Задача',

@@ -6,6 +6,7 @@ import Register from "./components/register_component";
 import Login from "./components/login_component";
 import Profile from "./components/profile_component";
 import { Router,  Route, Link, Switch } from "react-router-dom";
+
 import {useSelector,useDispatch} from "react-redux";
 import {logout_action} from "./actions/auth_action"
 import {history} from "./helpers/history_helper";
