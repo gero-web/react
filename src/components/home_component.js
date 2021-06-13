@@ -49,7 +49,7 @@ import { Button} from 'antd';
             okText="Да" 
             onConfirm={()=>{
               task.delateTask(record.pk).then(response=>{
-                getDate();     
+                handleDelete(record.key);
               }).catch(res=>{
                 message.error("Вы не авторизованы или у вас нет прав");
               });   
@@ -57,7 +57,7 @@ import { Button} from 'antd';
             cancelText="Нет">
             <a onClick={(event)=>{
               event.preventDefault();    
-                 
+             
             }} >Удалить</a>
         
             </Popconfirm>
@@ -66,20 +66,25 @@ import { Button} from 'antd';
     },
   ];
   const [data, setData] = useState([]);
-       const getDate = () =>{
+  const getDate = () =>{
         task.getAllTask().then((response)=>{
           setData(response.data.map((item,index)=> {return {...item,key:item.pk}}));      
         })
-       }
+    }
      
       
-       useEffect(() => {
+    useEffect(() => {
               task.getAllTask().then((response)=>{
                 getDate();                    
               })
-       }, [])
-      
-       const createHandle = () => {
+    }, [])
+    const  handleDelete = (key) => {
+         const dataSource = [...data];
+            setData(
+              dataSource.filter((item) => item.key !== key),
+            );
+    }
+    const createHandle = () => {
          history.push('/add');
        }
        return(
